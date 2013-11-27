@@ -3,14 +3,17 @@
   <head>
      <script src="static/js/angular.min.js"></script>
       <script src="static/js/socialNetwork.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+      <script src="static/js/jquery-cookie.js"></script>
   </head>
   <body>
     <div ng-controller="LoginController">
       <form novalidate class="simple-form">
+          {{state}}
         Username: <input type="text" ng-minlength=5 ng-model="username" /> <br>
-        Password: <input type="password" required ng-minlength=5 ng-model="password"/> <br>         
+        Password: <input type="password" required ng-minlength=5 ng-model="password"/> <br>
          <button ng-click="createUser()">Sign up </button> 
-        <button type="submit" ng-click="login()">Login</button>        
+        <button type="submit" ng-click="login()">Login</button>
       </form>
      </div>
     

@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'NetworkSite',
+    'djangorestframework',
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     # other context processors....
