@@ -1,0 +1,19 @@
+<!doctype html>
+<html ng-app="socialNetwork">
+  <head>
+
+     <script src="{{STATIC_URL }}js/angular.min.js"></script>
+      <script src="{{STATIC_URL}}js/socialNetwork.js"></script>
+  </head>
+  <body>
+    <div ng-controller="LoginController">
+      <form novalidate class="simple-form">
+        Username: <input type="text" ng-minlength=5 ng-model="username" /> <br>
+        Password: <input type="password" required ng-minlength=5 ng-model="password"/> <br>         
+         <button ng-click="createUser()">Sign up </button> 
+        <button type="submit" ng-click="login()">Login</button>        
+      </form>
+     </div>
+    
+  </body>
+</html>
