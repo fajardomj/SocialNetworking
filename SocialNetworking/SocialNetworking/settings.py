@@ -86,6 +86,9 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '4clc1c&%^_cm!d5m!w*bcyrd36hx3%#vji6#tru9-0d^6a$%if'
 
+AUTHENTICATION_BACKENDS = (
+    'SocialNetworking.backends.WebAuth',
+)
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',

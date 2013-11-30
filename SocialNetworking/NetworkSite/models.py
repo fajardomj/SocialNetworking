@@ -47,3 +47,5 @@ class Userfriends(models.Model):
     class Meta:
         db_table = 'UserFriends'
 
+
+

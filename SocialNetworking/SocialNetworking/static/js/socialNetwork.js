@@ -21,7 +21,7 @@ var myapp = angular.module('socialNetwork', []);
                alert(data);
                 }
             });
-            $scope.$apply(function() { $location.path("/login"); });
+
 
 
         }
