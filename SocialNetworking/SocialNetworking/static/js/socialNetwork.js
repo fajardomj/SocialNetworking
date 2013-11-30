@@ -18,7 +18,7 @@ var myapp = angular.module('socialNetwork', []);
                 data: {"csrfmiddlewaretoken": csrftoken,'username':$scope.username,'password':$scope.password},
                success: function(data)
                 {
-               alert(data);
+
                 }
             });
 

@@ -1,14 +1,12 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import ensure_csrf_cookie
 @ensure_csrf_cookie
 
 def index(request):
-    state ="Pre Login"
+    state ="Pre-Login"
     return render_to_response('index.html', {'state': state})
 
-def login(user):
-    return render_to_response('profile.html', {'name': user.username})
 
 def login_user(request):
 
@@ -23,7 +21,7 @@ def login_user(request):
         if user is not None:
             if user.isonline:
                 state = "Logged in"
-                login(user)
+                #login(request, user)
             else:
                 state = "error"
         else:

@@ -7,13 +7,17 @@ class WebAuth(object):
     def authenticate(self, username=None, password=None):
 
         try:
+            if username is not None:
         # Try to find a user matching your username
-            user = User.objects.get(username=username)
-            if user.password != password:
-                return None
+
+                user = User.objects.get(self, pk=username)
+                if user.password != password:
+                    return None
         except User.DoesNotExist:
         # No user was found, return None - triggers default login failed
             return None
+
+        return None
 
             # Required for your backend to work properly - unchanged in most scenarios
 
