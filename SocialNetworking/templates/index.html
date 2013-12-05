@@ -1,21 +1,35 @@
-<!doctype html>
-<html ng-app="socialNetwork">
-  <head>
-     <script src="static/js/angular.min.js"></script>
-      <script src="static/js/socialNetwork.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-      <script src="static/js/jquery-cookie.js"></script>
-  </head>
-  <body>
-    <div ng-controller="LoginController">
-      <form novalidate class="simple-form">
-          {{state}}
-        Username: <input type="text" ng-minlength=5 ng-model="username" /> <br>
-        Password: <input type="password" required ng-minlength=5 ng-model="password"/> <br>
-         <button ng-click="createUser()">Sign up </button> 
-        <button type="submit" ng-click="login()">Login</button>
-      </form>
-     </div>
-    
-  </body>
+<!DOCTYPE html>
+<html>
+
+<title>Log in</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+    {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}. {{ state }}</p>
+        <form action="/logout/" method="post">{% csrf_token %}
+            <input type="submit" value="Logout"/>
+        </form>
+{% else %}
+
+    <p>{{ state }}</p>
+
+	<form action="/login/" method="post">{% csrf_token %}
+		{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+		{% endif %}
+		Username:
+		<input type="text" name="username" placeholder="Username" /><br />
+		Password:
+		<input type="password" name="password" value="" placeholder="Password" /><br />
+
+		<input type="submit" value="Log In" />
+	</form>
+
+        <a href="/signup/">
+            <button>Sign up</button>
+        </a>
+{% endif %}
+</body>
 </html>

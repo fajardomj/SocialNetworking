@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app ="sign_up_app">
+
+<head>
+      {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href=" {% static "css/style.css" %}">
+    <script src="{% static "js/angular.min.js"%}"></script>
+    <script src="{% static "js/signup.js"%}"></script>
+    <title>Sign up</title>
+</head>
+{% if user == None %}
+<body ng-controller="SignupController">
+        <form name="myForm" method="POST" action="/create/" novalidate ">{% csrf_token %}
+
+            <div class="sign_up">
+                <p>Username:</p>
+                <div style="width:350px;">
+                    <input type="text"  ng-minlength="3" name="username" placeholder="Desired Username"ng-model="username" required /> <span class="check">☑</span>
+
+                    <span class="uncheck">☒</span>
+                </div>
+
+                <div class="custom-error" ng-show="myForm.username.$dirty && myForm.username.$invalid">Invalid: <span ng-show="myForm.username.$error.required">Username is required.</span>
+                    <span ng-show="myForm.username.$error.unique">Username is not unique </span>
+                    <span ng-show="myForm.username.$error.minlength">Username must be at least 3 characters.</span>
+
+                </div>
+                <p>Email:</p>
+                    <input type="email" name="email" placeholder="Email" ng-model="email" required>
+                <div class="custom-error" ng-show="myForm.email.$dirty && myForm.email.$invalid">Invalid Email Address <span ng-show="myForm.email.$error.required">Email is required.</span>
+                </div>
+                 <p>Password:</p>
+                    <input type="password" ng-minLength="5" name="password" placeholder="Password" ng-model="password" required>
+                <div class="custom-error" ng-show="myForm.password.$dirty && myForm.password.$invalid">Invalid: <span ng-show="myForm.password.$error.required">Password is required.</span>
+                    <span ng-show="myForm.password.$error.minlength">Password must be at least 5 characters.</span>
+
+                </div>
+
+            </div>
+             <input type="submit" value="Sign Up" ng-disabled="myForm.username.$pristine || myForm.username.$dirty && myForm.username.$invalid &&
+             myForm.password.$pristine || myForm.password.$dirty && myForm.password.$invalid ||myForm.email.$pristine || myForm.email.$dirty && myForm.email.$invalid "/>
+        </form>
+{% else  %}
+    <h1> You are already signed in</h1>
+    <form action="/logout/" method="post">{% csrf_token %}
+            <input type="submit" value="Logout"/>
+    </form>
+{% endif %}
+    </body>
+</html>

@@ -10,42 +10,87 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-class Login(models.Model):
-    logintime = models.DateTimeField(primary_key=True)
-    countrycode = models.CharField(max_length=3, blank=True)
-    state = models.CharField(max_length=20, blank=True)
-    username = models.ForeignKey('User', db_column='username')
+class AuthGroup(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=80)
     class Meta:
-        db_table = 'Login'
+        db_table = 'auth_group'
 
-class Messagesent(models.Model):
-    author = models.ForeignKey('User', db_column='author', related_name= "author_message_sent")
-    receiver = models.ForeignKey('User', db_column='receiver', related_name="receiver_message_sent")
-    timesent = models.DateTimeField()
-    message = models.CharField(max_length=1000)
+class AuthGroupPermissions(models.Model):
+    id = models.IntegerField(primary_key=True)
+    group = models.ForeignKey(AuthGroup)
+    permission = models.ForeignKey('AuthPermission')
     class Meta:
-        db_table = 'MessageSent'
+        db_table = 'auth_group_permissions'
 
-class Profile(models.Model):
-    id = models.BigIntegerField(primary_key=True)
-    backgroundcolor = models.CharField(max_length=20, blank=True)
+class AuthPermission(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=50)
+    content_type = models.ForeignKey('DjangoContentType')
+    codename = models.CharField(max_length=100)
     class Meta:
-        db_table = 'Profile'
+        db_table = 'auth_permission'
 
-class User(models.Model):
-    username = models.CharField(max_length=20, primary_key=True)
-    email = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    profileid = models.IntegerField()
-    isonline = models.ForeignKey(Profile, null=True, db_column='isonline', blank=True)
+class AuthUser(models.Model):
+    id = models.IntegerField(primary_key=True)
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField()
+    is_superuser = models.BooleanField()
+    username = models.CharField(max_length=30)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    email = models.CharField(max_length=75)
+    is_staff = models.BooleanField()
+    is_active = models.BooleanField()
+    date_joined = models.DateTimeField()
     class Meta:
-        db_table = 'User'
+        db_table = 'auth_user'
 
-class Userfriends(models.Model):
-    userowner = models.ForeignKey(User, db_column='UserOwner', related_name="owner_message_sent") # Field name made lowercase.
-    userfriend = models.ForeignKey(User, db_column='UserFriend', related_name="friend_message_sent") # Field name made lowercase.
+class AuthUserGroups(models.Model):
+    id = models.IntegerField(primary_key=True)
+    user = models.ForeignKey(AuthUser)
+    group = models.ForeignKey(AuthGroup)
     class Meta:
-        db_table = 'UserFriends'
+        db_table = 'auth_user_groups'
 
+class AuthUserUserPermissions(models.Model):
+    id = models.IntegerField(primary_key=True)
+    user = models.ForeignKey(AuthUser)
+    permission = models.ForeignKey(AuthPermission)
+    class Meta:
+        db_table = 'auth_user_user_permissions'
 
+class DjangoAdminLog(models.Model):
+    id = models.IntegerField(primary_key=True)
+    action_time = models.DateTimeField()
+    user = models.ForeignKey(AuthUser)
+    content_type = models.ForeignKey('DjangoContentType', null=True, blank=True)
+    object_id = models.TextField(blank=True)
+    object_repr = models.CharField(max_length=200)
+    action_flag = models.SmallIntegerField()
+    change_message = models.TextField()
+    class Meta:
+        db_table = 'django_admin_log'
+
+class DjangoContentType(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=100)
+    app_label = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+    class Meta:
+        db_table = 'django_content_type'
+
+class DjangoSession(models.Model):
+    session_key = models.CharField(max_length=40)
+    session_data = models.TextField()
+    expire_date = models.DateTimeField()
+    class Meta:
+        db_table = 'django_session'
+
+class DjangoSite(models.Model):
+    id = models.IntegerField(primary_key=True)
+    domain = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
+    class Meta:
+        db_table = 'django_site'
 

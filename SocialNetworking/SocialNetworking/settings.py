@@ -67,14 +67,17 @@ STATIC_ROOT = '/static/'
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
 
+LOGIN_URL = '/login/'
+
+LOGIN_REDIRECT_URL = '/home/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-   PROJECT_ROOT + '/static/',
+    PROJECT_ROOT + '/static/',
 )
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
@@ -86,9 +89,6 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '4clc1c&%^_cm!d5m!w*bcyrd36hx3%#vji6#tru9-0d^6a$%if'
 
-AUTHENTICATION_BACKENDS = (
-    'SocialNetworking.backends.WebAuth',
-)
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',

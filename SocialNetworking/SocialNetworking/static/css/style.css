@@ -1,7 +1,63 @@
-.simple-form input.ng-invalid.ng-dirty {
-        background-color: #FA787E;
-      }
+.sign_up span.check, .sign_up span.uncheck {
+    display:none;
+    float: right;
+    font-size:36px;
+    margin-top: -12px;
+}
+.sign_up .ng-pristine {
+    border:1px solid Gold;
+}
+.sign_up .ng-dirty.ng-valid {
+    border:1px solid Green;
+}
+.sign_up .ng-dirty.ng-invalid {
+    border:1px solid Red;
+}
+.sign_up .ng-dirty.ng-valid ~ span.check {
+    color:green;
+    display:inline;
+}
+.sign_up .ng-dirty.ng-invalid ~ span.uncheck {
+    color:red;
+    display:inline;
+}
 
-      .simple-form input.ng-valid.ng-dirty {
-        background-color: #78FA89;
-      }
+.searchbox {
+  background:white;
+  list-style:none;
+  box-sizing:border-box;
+  -moz-box-sizing: border-box;
+  position: absolute;
+}
+
+
+.animate-repeat {
+  line-height:20px;
+  list-style:none;
+  box-sizing:border-box;
+  -moz-box-sizing: border-box;
+  border: 1px solid black;
+
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  opacity:0;
+  max-height:0;
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+  opacity:1;
+  max-height:40px;
+}
+

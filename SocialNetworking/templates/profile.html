@@ -1,12 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="profile_app">
 <head>
-    <title></title>
+ {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href=" {% static "css/style.css" %}">
+    <script src="{% static "js/angular.min.js"%}"></script>
+     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-animate.min.js"></script>
+    <script src="{% static "js/profile.js"%}"></script>
+
+    <title>{{ user.username }}'s Profile</title>
 </head>
-<body>
+<body ng-controller="profileController">
+<input type="hidden" id="username" value="{{ user.username }}">
+    <button ng-click="home()">Home</button>
+    <form method="POST" action="/logout/">{% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
 
-  Hello {{ name }}.
-
-This is your profile page.
+    <ul class="searchbox">
+      <input type="search" ng-model="q" placeholder="Search Friends" />
+      <li  class="animate-repeat" ng-show="username.$dirty && !username.$pristine" ng-repeat="user in users | filter:q" ng-show="!$last">
+                <a href="#">// user.fields.username //</a>
+      </li>
+    </ul>
 </body>
 </html>
