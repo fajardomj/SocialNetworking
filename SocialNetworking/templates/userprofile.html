@@ -10,15 +10,11 @@
     <script src="{% static "js/profile.js"%}"></script>
     <script src="{% static "js/messaging.js"%}"></script>
 
-    <title>{{ user.username }}'s Profile</title>
-    <input type="hidden" id="username" value="{{ user.username }}">
+    <title>{{ owner.username }}'s Profile</title>
+    <input type="hidden" id="owner" value="{{owner.username}}">
 </head>
 
-
-
-
-<body ng-controller="profileController">
-<div class="navbar navbar-fixed-top">
+ <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -27,33 +23,36 @@
         <span class="icon-bar"></span>
       </a>
       <a class="brand" href="/">Social Network</a>
-      <div class="nav-collapse">
-          <form class="navbar-search pull-right" method="POST" action="/logout/">{% csrf_token %}
-               &nbsp
-              <button class="btn btn-info" type="button" ng-click="editcolor()"> <i class="icon-pencil"></i> Edit Profile </button>
-              <button class="btn btn-danger" type="submit"><i class="icon-user"></i> Logout </button>
-          </form>
-        <form name="searchForm"class="navbar-search pull-right">
-         <input type="text" name="searchterm" id="searchterm" placeholder="Search People" class="input-medium search-query"ng-model="selected" typeahead="u.fields.username for u in users | filter:$viewValue | limitTo:3">
+      <div class="nav-collapse pull-right">
+ <form name="searchForm"class="navbar-search pull-right">
+         <input type="text" name="searchterm" id="searchterm" placeholder="Search People" class="input-medium search-query"ng-model="selected" typeahead="u.fields.username for u in users | filter:$viewValue | limitTo:4">
           <button onclick="getProfile(searchterm.value)"class="search-query btn btn-success">Search</button>
         </form>
+
       </div><!-- /.nav-collapse -->
     </div><!-- /.container -->
   </div><!-- /.navbar-inner -->
 </div>
-<input type="hidden" id="username" value="{{ user.username }}">
+<body ng-controller="profileController">
     <button class="btn" ng-click="home()"><i class="icon-home"></i> Home</button>
-<!--  test chat-->
+    <h1> {{ owner.username }}'s Profile</h1>
+
+    {% if visitor == None %}
+    <form method="GET"action="/">
+         <h3> Please Login before messaging</h3>
+    </form>
+    {% else %}
+        <button onclick="createChat();" class="btn btn-success">Message me</button>
+      <div class="index_reload">
+    <!--index_reload-->
+         <div id="chat_area" name="chat_area">
+         </div>
+      </div>
+    {% endif %}
 
 
 
 
-
-
-
-
-
-<!-- end test chat -->
 <div class="navbar navbar-fixed-bottom">
     <div class='navbar-inner'>
     <div class='container-fluid'>

@@ -15,9 +15,12 @@ urlpatterns = patterns('',
     url(r'^logout/', 'NetworkSite.views.logout', name='logout'),
     url(r'^signup/', 'NetworkSite.views.signup', name='signup'),
     url(r'^check_username/', 'NetworkSite.views.check_username', name='check_username'),
+    url(r'^check_email/', 'NetworkSite.views.check_email', name='check_email'),
     url(r'^create/', 'NetworkSite.views.create', name='create'),
     url(r'^get_users/', 'NetworkSite.views.get_all_users', name='get_users'),
-    url(r'^error/', 'NetworkSite.views.error', name='error'),
+    url(r'^profile/(?P<username>\w+)/$', 'NetworkSite.views.get_user_profile', name='user_profile'),
+    url(r'^message/(?P<username>\w+)/$', 'NetworkSite.views.message_user', name='message'),
+
 
 
     # Uncomment the admin/doc line below to enable admin documentation:

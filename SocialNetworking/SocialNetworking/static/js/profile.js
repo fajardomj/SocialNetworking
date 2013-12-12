@@ -1,5 +1,5 @@
 'use strict';
-angular.module('profile_app', [])
+angular.module('profile_app', ['ui.bootstrap'])
     .config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -12,14 +12,14 @@ angular.module('profile_app', [])
         $http.get('/get_users/')
             .success(function(data) {
                 $scope.users = data;
-
             })
-        $scope.home = function() {
-            location.href='/home/'
-        }
+
+
+
 
 
   })
+
 
 
 

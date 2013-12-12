@@ -60,18 +60,6 @@ class AuthUserUserPermissions(models.Model):
     class Meta:
         db_table = 'auth_user_user_permissions'
 
-class DjangoAdminLog(models.Model):
-    id = models.IntegerField(primary_key=True)
-    action_time = models.DateTimeField()
-    user = models.ForeignKey(AuthUser)
-    content_type = models.ForeignKey('DjangoContentType', null=True, blank=True)
-    object_id = models.TextField(blank=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.SmallIntegerField()
-    change_message = models.TextField()
-    class Meta:
-        db_table = 'django_admin_log'
-
 class DjangoContentType(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)

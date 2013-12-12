@@ -1,22 +1,60 @@
 'use strict';
-angular.module('sign_up_app', [])
+angular.module('sign_up_app', ['ui.bootstrap'])
     .config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';    }
-])
-  .controller('SignupController', function($scope,$http) {
-        $scope.submitForm = function() {
-            $http.post('/create/',{"username":$scope.username,"password":$scope.password,"email": $scope.email})
-                .success(function(data){
-                    //success
-                    alert(data)
-                })
-                .error(function(data){
-                    //error
-                })
-        }
+    ])
+    .config(['$interpolateProvider',function($interpolateProvider){
+        $interpolateProvider.startSymbol('//');
+        $interpolateProvider.endSymbol('//');
+    }])
+  .controller('SignupController', function($scope, $http) {
+
+
+        $scope.$watch('username',function(){
+
+                $http.post('/check_username/',{"username":$scope.username})
+                    .success(function(data) {
+               // alert("D" + data.isValid);
+                       //$scope.username.$setValidity("us",data.isValid);
+                       $scope.username.$setValidity("isUnqiue", data.isValid)
+
+
+                    })
+                    .error(function(data) {
+                        $scope.username.$setValidity("isUnqiue",false);
+                    })
+
+         });
+
+        $scope.$watch('email',function(){
+
+                $http.post('/check_email/',{"email":$scope.email})
+                    .success(function(data) {
+                         $scope.email.$setValidity("el",data.isValid);
+                    })
+                    .error(function(data) {
+                        $scope.email.$setValidity("el",false);
+                    })
+
+        });
 
   })
+//.directive('isUnique', function() {
+//  return {
+//    require: 'ngModel',
+//    link: function(scope, elm, attrs, ctrl) {
+//      ctrl.$parsers.unshift(function(viewValue) {
+//
+//          // it is valid
+//          ctrl.$setValidity('isUnique', true);
+//          return viewValue;
+//
+//      });
+//    }
+//  };
+//})
+
 
 
 

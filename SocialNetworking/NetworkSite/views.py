@@ -1,4 +1,5 @@
 from loginhelpers import *
+from validationhelpers import *
 from django.contrib.auth import authenticate, login
 from django.template import RequestContext
 from django.shortcuts import render_to_response
@@ -7,7 +8,6 @@ from django.http.response import *
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.core import serializers
-from django.forms.models import model_to_dict
 import json
 
 
@@ -17,7 +17,7 @@ def index(request):
     user = get_user_logged_in(request)
     state = getState(user)
     if user is not None:
-        return render_to_response('profile.html', {'username': user.username}, context_instance=RequestContext(request))
+        return HttpResponseRedirect('/home/')
 
     return render_to_response('index.html', {'state': state, 'user': user}, context_instance=RequestContext(request))
 
@@ -31,8 +31,11 @@ def profile(request):
     return render_to_response('profile.html', {'user': user}, context_instance=RequestContext(request))
 
 #authenication of user
-@ensure_csrf_cookie
+#@ensure_csrf_cookie
+@csrf_exempt
 def login_user(request):
+    if request.GET and not request.user.is_authenticated():
+        return HttpResponseRedirect('/')
     user=''
     state = ''
     username = password = ''
@@ -51,10 +54,9 @@ def login_user(request):
                 state = "Your account is not active, please contact the site admin."
         else:
             state = "Your username and/or password were incorrect."
+            return render_to_response('index.html', {'state': state, 'user': user}, context_instance=RequestContext(request))
     else:
-        user = get_user_logged_in(request)
-        state = getState(user)
-    return render_to_response('index.html', {'state': state, 'user': user}, context_instance=RequestContext(request))
+        return HttpResponseRedirect('/')
 
 #logs out user
 def logout(request):
@@ -75,17 +77,20 @@ def signup(request):
 
 #creates user
 def create(request):
-    user =''
-    if request.POST:
+   user=''
+   if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
         email = request.POST.get('email')
         if username is None or password is None or email is None:
             return HttpResponse("No username or password or email")
         user = User.objects.create_user(username, email, password)
+       # User.objects.raw('update public.auth_user set profile_url="/profile/%s" where username="%s",username')
+        #User.objects.filter(username=username).update(profile_url="/profile/"+username)
+        ##user.profile_url = '/profile/' + username + '/'
         user.save()
         login_user(request)
-    return render_to_response('profile.html', {'user': user}, context_instance=RequestContext(request))
+   return render_to_response('profile.html', {'user': user}, context_instance=RequestContext(request))
 
 
 #AJAX checks if username is taken
@@ -94,20 +99,48 @@ def check_username(request):
     data = json.loads(request.body)
     username = data.get('username')
     if username is not None:
-        return username_present(username)
-    return HttpResponse(False)
+        data = {"isValid": username_available(username)}
+        return HttpResponse(json.dumps(data), content_type="application/json")
+    return HttpResponse(json.dumps({"isValid": False}), content_type="application/json")
+@csrf_exempt
+def check_email(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    if email is not None:
+        data = {"isValid": email_available(email)}
+        return HttpResponse(json.dumps(data), content_type="application/json")
+    return HttpResponse(json.dumps({"isValid": False}), content_type="application/json")
 
 def get_all_users(request):
-   ## data = serializers.serialize('json', User.objects.all(), fields=('username'))
-    data = {"username" :"matt"},{"username": "blah"}
+    data = serializers.serialize('json', User.objects.all(), fields=('username'))
+    #data = {"fields":["username","hi"]}
+
     return HttpResponse(data, content_type="application/json")
 
-    #return HttpResponseRedirect('/')
 
-#serves error page
-def error(request):
-    return render_to_response('error.html')
+#def getMessage(request,username):
+  #  if request.is_ajax() and request.POST:
 
-#def get_another_profile(request):
-    #get another users profile and return it
-    # return render_to_response('profile.html', {'user': user}, context_instance=RequestContext(request))
+
+def message_user(request):
+    return HttpResponse('');
+
+#gets profile of user
+def get_user_profile(request, username):
+    owner = None;
+    visitor = None;
+    isOwner = False;
+    try:
+        owner = User.objects.get(username=username)
+
+    except User.DoesNotExist:
+        raise Http404
+
+    visitor = get_user_logged_in(request)
+    isOwner = False
+    if visitor is not None:
+     if visitor.username == owner.username:
+         isOwner = True
+
+
+    return render_to_response('userprofile.html', {'visitor': visitor, 'owner': owner, 'isOwner': isOwner}, context_instance=RequestContext(request))

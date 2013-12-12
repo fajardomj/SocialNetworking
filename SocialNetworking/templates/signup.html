@@ -4,42 +4,61 @@
 <head>
       {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href=" {% static "css/style.css" %}">
+    <link rel="stylesheet" type="text/css" href=" {% static "css/bootstrap.min.css" %}">
     <script src="{% static "js/angular.min.js"%}"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.7.0.js"></script>
     <script src="{% static "js/signup.js"%}"></script>
     <title>Sign up</title>
 </head>
+
 {% if user == None %}
 <body ng-controller="SignupController">
-        <form name="myForm" method="POST" action="/create/" novalidate ">{% csrf_token %}
 
-            <div class="sign_up">
-                <p>Username:</p>
-                <div style="width:350px;">
-                    <input type="text"  ng-minlength="3" name="username" placeholder="Desired Username"ng-model="username" required /> <span class="check">☑</span>
+<div class="container">
+      <div class="row-fluid">
+        <div class="offset4 span2">
 
-                    <span class="uncheck">☒</span>
+     <form class="form-horizontal" name="myForm" action="/create/" novalidate method="post">{% csrf_token %}
+           <div class="control-group">
+                 <label class="control-label" for="inputUsername">Username</label>
+             <div class="controls">
+                <input required type="text" name ="username" ng-model="username" placeholder="Desired Username">
+              </div>
+
+           </div>
+
+         <div class="control-group">
+            <label class="control-label" for="inputIcon">Email address</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                         <span class="add-on"><i class="icon-envelope"></i></span>
+                         <input class="email-address" required type="email" name ="email" ng-model="email" placeholder="Email" type="text">
+                    </div>
                 </div>
+            </div>
 
-                <div class="custom-error" ng-show="myForm.username.$dirty && myForm.username.$invalid">Invalid: <span ng-show="myForm.username.$error.required">Username is required.</span>
-                    <span ng-show="myForm.username.$error.unique">Username is not unique </span>
-                    <span ng-show="myForm.username.$error.minlength">Username must be at least 3 characters.</span>
+           <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+                <div class="controls">
+                     <input required ng-minLength="5" type="password" ng-model="password" name="password" placeholder="Password">
+                </div>
+            </div>
 
-                </div>
-                <p>Email:</p>
-                    <input type="email" name="email" placeholder="Email" ng-model="email" required>
-                <div class="custom-error" ng-show="myForm.email.$dirty && myForm.email.$invalid">Invalid Email Address <span ng-show="myForm.email.$error.required">Email is required.</span>
-                </div>
-                 <p>Password:</p>
-                    <input type="password" ng-minLength="5" name="password" placeholder="Password" ng-model="password" required>
-                <div class="custom-error" ng-show="myForm.password.$dirty && myForm.password.$invalid">Invalid: <span ng-show="myForm.password.$error.required">Password is required.</span>
-                    <span ng-show="myForm.password.$error.minlength">Password must be at least 5 characters.</span>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn-danger" disabled="true" ng-hide="myForm.$valid">Sign up</button>
+                <button type="submit" class="btn-success" ng-hide="
+             myForm.username.$pristine || myForm.username.$dirty && myForm.username.$invalid ||
+             myForm.password.$pristine || myForm.password.$dirty && myForm.password.$invalid ||
+             myForm.email.$pristine    || myForm.email.$dirty    && myForm.email.$invalid ">Sign up</button>
 
-                </div>
 
             </div>
-             <input type="submit" value="Sign Up" ng-disabled="myForm.username.$pristine || myForm.username.$dirty && myForm.username.$invalid &&
-             myForm.password.$pristine || myForm.password.$dirty && myForm.password.$invalid ||myForm.email.$pristine || myForm.email.$dirty && myForm.email.$invalid "/>
-        </form>
+        </div>
+    </form>
+    </div>
+   </div>
+  </div>
 {% else  %}
     <h1> You are already signed in</h1>
     <form action="/logout/" method="post">{% csrf_token %}

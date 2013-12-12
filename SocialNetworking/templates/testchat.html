@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+
+<div class="index_reload">
+    <!--index_reload-->
+    <div id="chat_area" name="chat_area">
+    <div class="chat_box main_chat1" id="chat_id1">
+        <!--chat_box-->
+        <div class="user_box">
+            <div class="name open_chat1 left">Test chat</div>
+            <div class="closed1 right">x &nbsp;</div>
+            <div class="clear"></div>
+        </div>
+        <div id ="wrapbox"class="wrap_box1">
+            <!--wrap_box-->
+            <div id="message_content" class="message_content">
+                <!--message_content-->
+                <div id="reply_output">
+                    <div class="message_post">
+                        <img src="{% static "img/front-page-img.jpg" %}" width="35" class="left user_img">
+                        <div class="message_text left">ANSWER ME</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="message_post">
+                        <img src="http://www.globalwoodmart.my/_img/logo_peka.gif" width="35" class="left user_img">
+                        <div class="message_text left">A</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="message_post">
+                        <img src="{% static "img/front-page-img.jpg" %}" width="35" class="left user_img">
+                        <div class="message_text left">hey</div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="message_post">
+                        <img src="http://www.globalwoodmart.my/_img/logo_peka.gif" width="35" class="left user_img">
+                        <div class="message_text left">Hello</div>
+                        <div class="clear"></div>
+                    </div>
+
+                </div>
+            </div>
+            <!--message_content-->
+            <div name="box_reply" class="box_reply">
+                <form id="reply" onsubmit="sendMessage(text_reply);">
+                    <input type="text" id="text_reply" name="text_reply" class="text_reply">
+                </form>
+            </div>
+        </div>
+        <!--wrap_box-->
+    </div>
+
+    <!--chat_box-->
+
+
+
+
+
+    <!--chat_box-->
+</div>
+</div>
+<!--index_reload-->
+
+
+
+
+
+
+
+</body>
+</html>
