@@ -9,6 +9,8 @@
     <script src="{% static "js/jquery-1.4.2.min.js"%}"></script>
     <script src="{% static "js/profile.js"%}"></script>
     <script src="{% static "js/messaging.js"%}"></script>
+    <script src="{% static "jqchat.js"%}"></script>
+
 
     <title>{{ user.username }}'s Profile</title>
     <input type="hidden" id="username" value="{{ user.username }}">
@@ -46,9 +48,60 @@
 <!--  test chat-->
 
 
+<div class="index_reload">
+    <!--index_reload-->
+    <div id="chat_area" name="chat_area">
+    <div class="chat_box main_chat1" id="chat_id1">
+        <!--chat_box-->
+        <div class="user_box">
+            <div class="name open_chat1 left">Test chat</div>
+            <div class="closed1 right">x &nbsp;</div>
+            <div class="clear"></div>
+        </div>
+        <div id ="wrapbox"class="wrap_box1">
+            <!--wrap_box-->
+            <div id="message_content" class="message_content">
+                <!--message_content-->
+                <div id="reply_output">
+                    <div class="message_post">
+                        <img src="{% static "img/front-page-img.jpg" %}" width="35" class="left user_img">
+                        <div class="message_text left">ANSWER ME</div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <!--message_content-->
+            <div name="box_reply" class="box_reply">
+                <form id="chatform">
+	                <label for="msg">Message:</label>
+	                <input type="text" id="msg" />
+                </form>
+            </div>
+        </div>
+        <!--wrap_box-->
+    </div>
+
+    <!--chat_box-->
 
 
 
+
+
+    <!--chat_box-->
+</div>
+</div>
+<!--index_reload-->
+
+
+<div id="chatwindow"><span id="loading">Loading...</span></div>
+
+<form id="chatform">
+	<label for="msg">Message:</label>
+	<input type="text" id="msg" />
+	<input type="submit" value="Send message" /><br />
+</form>
+
+<script type="text/javascript">document.getElementById("msg").focus();</script>
 
 
 

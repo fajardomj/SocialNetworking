@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^get_users/', 'NetworkSite.views.get_all_users', name='get_users'),
     url(r'^profile/(?P<username>\w+)/$', 'NetworkSite.views.get_user_profile', name='user_profile'),
     url(r'^message/(?P<username>\w+)/$', 'NetworkSite.views.message_user', name='message'),
+    url(r'^chat/',include('jqchat.urls')),
 
 
 

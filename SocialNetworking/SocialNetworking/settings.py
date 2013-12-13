@@ -9,15 +9,25 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
+#
+#DATABASES = {
+#    'default': {
+#        'ENGINE':'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'deecd6rnacp1rq',
+#        'USER': 'mcyxzfroirxpns',
+#        'PASSWORD': '6URq3atdPEyZN3_PsbDWiavwqV',
+#        'HOST': 'ec2-23-21-170-57.compute-1.amazonaws.com',
+#        'PORT': '5432',
+#    }
+#}
 DATABASES = {
-    'default': {
-        'ENGINE':'django.db.backends.postgresql_psycopg2',
-        'NAME': 'deecd6rnacp1rq',
-        'USER': 'mcyxzfroirxpns',
-        'PASSWORD': '6URq3atdPEyZN3_PsbDWiavwqV',
-        'HOST': 'ec2-23-21-170-57.compute-1.amazonaws.com',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "Fajardo",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "localhost",
+        "PORT": "",
     }
 }
 
@@ -125,6 +135,11 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'NetworkSite',
+    'jqchat',
+    'pytz',
+    'timezones',
+    'south',
+
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     # other context processors....
