@@ -132,8 +132,13 @@
 }
 .index_reload {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     right: 1px;
+    display: none;
+}
+#msg {
+    width:180px;
+    margin-top:10px;
 }
 #chat_area {
     float:right;

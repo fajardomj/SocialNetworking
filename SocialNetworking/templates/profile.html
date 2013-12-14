@@ -45,16 +45,16 @@
 </div>
 <input type="hidden" id="username" value="{{ user.username }}">
     <button class="btn" ng-click="home()"><i class="icon-home"></i> Home</button>
-<!--  test chat-->
 
+<!-- test chat -->
 
-<div class="index_reload">
+<div id="index_reload" class="index_reload">
     <!--index_reload-->
     <div id="chat_area" name="chat_area">
     <div class="chat_box main_chat1" id="chat_id1">
         <!--chat_box-->
         <div class="user_box">
-            <div class="name open_chat1 left">Test chat</div>
+            <div id="userChat"class="name open_chat1 left">Test</div>
             <div class="closed1 right">x &nbsp;</div>
             <div class="clear"></div>
         </div>
@@ -64,17 +64,17 @@
                 <!--message_content-->
                 <div id="reply_output">
                     <div class="message_post">
-                        <img src="{% static "img/front-page-img.jpg" %}" width="35" class="left user_img">
-                        <div class="message_text left">ANSWER ME</div>
+                       <div class="message_text left" id="chatwindow"><span id="loading">Loading...</span></div>
                         <div class="clear"></div>
                     </div>
+
                 </div>
             </div>
             <!--message_content-->
             <div name="box_reply" class="box_reply">
                 <form id="chatform">
-	                <label for="msg">Message:</label>
-	                <input type="text" id="msg" />
+                     <input type="text" id="msg" />
+	                <input type="submit"  class="btn-primary"value="Send" />
                 </form>
             </div>
         </div>
@@ -90,16 +90,6 @@
     <!--chat_box-->
 </div>
 </div>
-<!--index_reload-->
-
-
-<div id="chatwindow"><span id="loading">Loading...</span></div>
-
-<form id="chatform">
-	<label for="msg">Message:</label>
-	<input type="text" id="msg" />
-	<input type="submit" value="Send message" /><br />
-</form>
 
 <script type="text/javascript">document.getElementById("msg").focus();</script>
 

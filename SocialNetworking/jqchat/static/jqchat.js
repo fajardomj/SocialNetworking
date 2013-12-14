@@ -5,8 +5,10 @@
 var success;
 var timestamp = 0;
 var id = 0;
+var created = false;
+var chatFound = false;
 // URL to contact to get updates.
-var url = '/chat/room/';
+var url = null;
 
 // How often to call updates (in milliseconds)
 var CallInterval = 500;
@@ -57,32 +59,67 @@ function processResponse(payload) {
 	if(prCallback != null) prCallback(payload);
 }
 
-function createChat(owner, visitor) {
-    $.get('/chat/get_room/'+ owner+'/'+visitor,
-        function(data) {
-            if(data != '' && data[0].pk!=undefined) {
-                 InitChatWindow(data[0]);
+//function createChat(owner, visitor) {
+//    $.get('/chat/get_room/'+ owner+'/'+visitor,
+//        function(data) {
+//            if(data != '' && data[0].pk!=undefined) {
+//                 InitChatWindow(data[0]);
+//            }
+//            else {
+//                $.post('/chat/create/',{"owner":owner,"visitor":visitor },
+//                    function(data) {
+//                        if(data.status != 0){
+//
+//                            InitChatWindow(data[0]);
+//                         }
+//                     }
+//
+//                );
+//            }
+//        }
+//    );
+//
+//}
+
+function create(owner, visitor) {
+    if(!chatFound) {
+            $.post('/chat/create/',{"owner":owner,"visitor":visitor },
+                    function(data) {
+                        if(data.status != 0){
+
+                            InitChatWindow(data[0]);
+                         }
+                     }
+
+            );
     }
-            else {
-                $.post('/chat/create/',{"owner":owner,"visitor":visitor },
+
+}
+
+function checkChat(owner, visitor) {
+    if(!created) {
+         $.get('/chat/get_room/'+ owner+'/'+visitor,
             function(data) {
-                if(data.status != 0){
-
-                    InitChatWindow(data[0]);
+                if(data != '' && data[0].pk!=undefined) {
+                 InitChatWindow(data[0]);
                 }
-
-
-
+                else {
+                    checkChat(owner,visitor);
+                }
             }
 
-        );
-            }
-        }
-    );
+         );
+    }
+
 
 }
 
 function InitChatWindow(room){
+    document.getElementById('index_reload').style.display = 'block';
+    document.getElementById('userChat').innerHTML = room.fields.name;
+
+    created = true;
+    chatFound = true;
 
 /**   The args to provide are:
 	- the URL to call for AJAX calls.
@@ -92,7 +129,7 @@ function InitChatWindow(room){
 	$("#loading").remove(); // Remove the dummy 'loading' message.
 
 	// Push the calling args into global variables so that they can be accessed from any function.
-	url += room.pk + '/ajax/';
+	url = '/chat/room/' + room.pk + '/ajax/';
 	//prCallback = ProcessResponseCallback;
 
 	// Read new messages from the server every X milliseconds.
@@ -172,3 +209,32 @@ function InitChatDescription(){
 	});
 
 }
+
+$(document).ready(function () {
+if(visitor != null)
+        checkChat(owner, visitor);
+    //Dont worry about this script im using php to loop this is just temporary
+    //Close
+    $('.closed1').click(function () {
+        $('.wrap_box1').hide();
+        $('.main_chat1').addClass('hide_wrap_box');
+    });
+
+    //Open
+    $('.open_chat1').click(function () {
+        $('.wrap_box1').show();
+        $('.main_chat1').removeClass('hide_wrap_box');
+    });
+
+    //Close
+    $('.closed2').click(function () {
+        $('.wrap_box2').hide();
+        $('.main_chat2').addClass('hide_wrap_box');
+    });
+
+    //Open
+    $('.open_chat2').click(function () {
+        $('.wrap_box2').show();
+        $('.main_chat2').removeClass('hide_wrap_box');
+    });
+});

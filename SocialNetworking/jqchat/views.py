@@ -47,36 +47,42 @@ def WindowWithDescription(request, id):
 
 #------------------------------------------------------------------------------
 def getRoom(request, user, visitor):
-
+    visitorU = User.objects.get(username=visitor)
+    userU = User.objects.get(username=user)
     room = None
     try:
-       room = Room.objects.get(name=user)
-    except:
-        room = None
-    if room == None:
-        try:
-            room = Room.objects.get(name=visitor)
-        except:
-            return HttpResponse('/')
+       room = Room.objects.get(name=userU, object_id=visitorU.id)
+    except Exception:
+        pass
+
+    try:
+        room = Room.objects.get(name=visitor, object_id=userU.id)
+    except Exception:
+        pass
+
+
     if room is not None:
         data = serializers.serialize('json', [room])
         return HttpResponse(data, content_type="application/json")
+    return HttpResponse('/')
 
 
 @csrf_exempt
 def createChat(request):
     if request.POST:
-        ownerid = request.POST.get('owner')
-        visitorid = request.POST.get('visitor')
-        owner = User.objects.get(username=ownerid)
-        visitor = User.objects.get(username=visitorid)
-        room = Room.objects.create(name=owner.username)
+        ownerName = request.POST.get('owner')
+        visitorName = request.POST.get('visitor')
+        owner = User.objects.get(username=ownerName)
+        visitor = User.objects.get(username=visitorName)
+
+        room = Room.objects.create(name=ownerName)
+        room.object_id = visitor.id
         room.save()
 
         data = serializers.serialize('json', [room])
         return HttpResponse(data, content_type="application/json")
-    else:
-        return HttpResponse('')
+
+    return HttpResponse('')
     #room = Room.objects.get(id=id)
    # if room is None:
        ##  //user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')

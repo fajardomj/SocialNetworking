@@ -11,33 +11,33 @@ angular.module('sign_up_app', ['ui.bootstrap'])
   .controller('SignupController', function($scope, $http) {
 
 
-        $scope.$watch('username',function(){
-
-                $http.post('/check_username/',{"username":$scope.username})
-                    .success(function(data) {
-               // alert("D" + data.isValid);
-                       //$scope.username.$setValidity("us",data.isValid);
-                       $scope.username.$setValidity("isUnqiue", data.isValid)
-
-
-                    })
-                    .error(function(data) {
-                        $scope.username.$setValidity("isUnqiue",false);
-                    })
-
-         });
-
-        $scope.$watch('email',function(){
-
-                $http.post('/check_email/',{"email":$scope.email})
-                    .success(function(data) {
-                         $scope.email.$setValidity("el",data.isValid);
-                    })
-                    .error(function(data) {
-                        $scope.email.$setValidity("el",false);
-                    })
-
-        });
+//        $scope.$watch('username',function(){
+//
+//                $http.post('/check_username/',{"username":$scope.username})
+//                    .success(function(data) {
+//               // alert("D" + data.isValid);
+//                       //$scope.username.$setValidity("us",data.isValid);
+//                       $scope.username.$setValidity("isUnqiue", data.isValid)
+//
+//
+//                    })
+//                    .error(function(data) {
+//                        $scope.username.$setValidity("isUnqiue",false);
+//                    })
+//
+//         });
+//
+//        $scope.$watch('email',function(){
+//
+//                $http.post('/check_email/',{"email":$scope.email})
+//                    .success(function(data) {
+//                         $scope.email.$setValidity("el",data.isValid);
+//                    })
+//                    .error(function(data) {
+//                        $scope.email.$setValidity("el",false);
+//                    })
+//
+//        });
 
   })
 //.directive('isUnique', function() {

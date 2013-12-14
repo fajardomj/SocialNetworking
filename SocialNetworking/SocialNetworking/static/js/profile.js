@@ -21,6 +21,13 @@ angular.module('profile_app', ['ui.bootstrap'])
   })
 
 
+function getProfile(username) {
+    if(username) {
+    window.location = '/profile/' + username;
+    }
+}
+
+
 
 
 
