@@ -43,6 +43,8 @@ class AuthUser(models.Model):
     is_staff = models.BooleanField()
     is_active = models.BooleanField()
     date_joined = models.DateTimeField()
+
+
     class Meta:
         db_table = 'auth_user'
 

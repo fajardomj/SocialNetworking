@@ -49,7 +49,7 @@ def login_user(request):
                 login(request, user)
                 request.session['logged_in_user'] = user.id
                 state = "You're successfully logged in!"
-                return render_to_response('profile.html', {'state':state,'user':user}, context_instance=RequestContext(request))
+                return HttpResponseRedirect('/home/')
             else:
                 state = "Your account is not active, please contact the site admin."
         else:
@@ -114,7 +114,7 @@ def check_email(request):
 def get_all_users(request):
     data = serializers.serialize('json', User.objects.all(), fields=('username'))
     #data = {"fields":["username","hi"]}
-
+    #print data
     return HttpResponse(data, content_type="application/json")
 
 
